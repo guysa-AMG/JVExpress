@@ -1,4 +1,4 @@
-package za;
+package za.jvexpress;
 import java.net.*;
 import java.io.IOException;
 import java.nio.channels.SelectionKey;
@@ -6,11 +6,11 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
-import za.utils.RequestContext;
-import za.utils.Log;
+import za.jvexpress.utils.RequestContext;
+import za.jvexpress.utils.Log;
 
 
-class Server{
+public  class Server{
     private ServerSocketChannel sock; 
     private Selector selector;
     private Log log;
