@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public class Request{
-private  String rawHeader;
+private final  String rawHeader;
 protected  String data;
 protected String host;
 protected String user_agent;
@@ -95,5 +95,7 @@ public static Request fromData(String data){
  public String getUserAgent(){return this.user_agent; }
  
  public String getCookie(){return this.cookie; }
+
+  public String getRawHeader(){return this.rawHeader; }
 
 }

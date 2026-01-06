@@ -6,15 +6,6 @@ plugins {
     id("buildlogic.java-application-conventions")
 }
 
-dependencies {
-    implementation("javax.annotation:javax.annotation-api:1.3.2")
-    implementation("org.apache.commons:commons-text")
-
-}
 
 
 
-application {
-    // Define the main class for the application.
-    mainClass = "za.jvexpress.Server"
-}

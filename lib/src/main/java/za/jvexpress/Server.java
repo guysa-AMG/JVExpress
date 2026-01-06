@@ -2,23 +2,29 @@ package za.jvexpress;
 
 import java.net.*;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.function.Function;
 
 import za.jvexpress.utils.RequestContext;
 import za.jvexpress.utils.Log;
 import za.jvexpress.utils.Log.LogLevel;
 import za.jvexpress.struct.Request;
-import java.lang.Runtime;
+import za.jvexpress.struct.Response;
+import za.jvexpress.struct.ReqFunction;
+
+
 
 public  class Server{
     private ServerSocketChannel sock; 
     private Selector selector;
     private Log log;
+    
+    private Map<String,Map<String,ReqFunction>> routes;
     private int port;
     
 
@@ -65,13 +71,34 @@ public  class Server{
         log.eprint(e);
         }  
     }
+    public void get(String path,ReqFunction callback){routes.put("GET",Map.of(path, callback));}
+    
+    public void post(String path,ReqFunction callback){routes.put("POST",Map.of(path, callback));}
+    
+    public void patch(String path,ReqFunction callback){routes.put("PATCH   ",Map.of(path, callback));}
+    
+    public void put(String path,ReqFunction callback){routes.put("PUT",Map.of(path, callback));}
+    
+    public void delete(String path,ReqFunction callback){routes.put("DELETE",Map.of(path, callback));}
+    
     public void RequestHandler(SelectionKey key,RequestContext context){
+      
         String res =context.getData();
        
         
         Request req = Request.fromData(res);
-         log.print(req.getMethod());
+        String currentMethod = req.getMethod();
+        log.print(currentMethod);
         log.route_print(req.getPath());
+       String path = req.getPath();
+
+       Map<String,ReqFunction> mapping= this.routes.get(currentMethod);
+
+       ReqFunction mappedfunc = mapping.get(path);
+        Response res = new Response();
+       mappedfunc.handle(req,res,(req,res,)->a);
+
+
     }
     public void RequestInterpreter(SelectionKey key){
 
