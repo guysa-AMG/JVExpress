@@ -6,6 +6,8 @@ public class Main{
     
     public static void main(String[] args) {
         
-      System.out.println("Glow");
+      Server app = new Server(8080);
+      app.init();
+      app.listen();
     }
 }
