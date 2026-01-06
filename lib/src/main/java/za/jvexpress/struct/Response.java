@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Request{
-private final  String rawHeader;
+public class Response{
+private final String rawHeader;
 protected  String data;
 protected String host;
 protected String user_agent;
@@ -28,7 +28,7 @@ protected  String http_version;
 
 
 
-    public Request(
+    public Response(
         String path,
         String raw,
         String host,
@@ -57,33 +57,10 @@ protected  String http_version;
     }
 
 
-public static Request fromData(String data){
-    String[] lines =data.split("\r\n");
-    Map<String,String> collection =new HashMap();
-    String method = lines[0].split(" ")[0];
-    String path = lines[0].split(" ")[1];
-    String httpVersion = lines[0].split(" ")[2];
-    for(String line : lines){
-    String[] dx =line.split(":");
-    if (dx.length>1){
-    collection.put(dx[0],dx[1]);
-    }
-    }
-    return new Request(
-        path,
-        data,
-        collection.get("Host"),
-        method,
-        collection.get("Cookie"),
-        collection.get("Upgrade-Insecure-Requests"),
-        collection.get("User-Agent"),
-        collection.get("Connection"),
-        collection.get("Accept"),
-        collection.get("Accept-Language"),
-        collection.get("Authorization"),
-        httpVersion 
-           
-    );
+public static Response fromContext(Request data){
+   
+    
+    return  data;
    
 }
  public String getPath(){return this.path; }
@@ -96,6 +73,7 @@ public static Request fromData(String data){
  
  public String getCookie(){return this.cookie; }
 
-  public String getRawHeader(){return this.rawHeader; }
+ public String getRawHeader(){return this.rawHeader; }
+
 
 }
