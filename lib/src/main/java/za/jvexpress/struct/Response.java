@@ -5,75 +5,84 @@ import java.util.Map;
 
 
 public class Response{
-private final String rawHeader;
-protected  String data;
-protected String host;
-protected String user_agent;
-protected String accept;
-protected String  accept_lang;
-protected String accept_encoding;
-protected String cookie;
-protected String upgrade_insecure_request;
-protected String connection;
-protected String sec_fetch_dest;
-protected String sec_fetch_mode;
-protected String sec_fetch_site;
-protected String sec_fetch_user;
-protected String priority;
-protected String method;
-protected String authorization;
-protected String cache_control;
-protected String path;
-protected  String http_version;
 
+protected String head ="HTTP/1.1 200 OK";
+protected String Vary= "Origin";
+protected String Content_Type= "text/html";
+protected String Cache_Control= "no-cache";
+protected String Etag= "W/288-mGR3sQgfYIpy8jQU0NkLVk2Tk3c";
+protected String Date= "Tue, 06 Jan 2026 14,36,52 GMT";
+protected String Connection= "keep-alive";
+protected String Keep_Alive= "timeout=5";
+protected int Content_len = 648;
+protected String sendable="""
+<!doctype html>
+<html lang="en">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
 
+    <script type="module" src="/@vite/client"></script>
 
-    public Response(
-        String path,
-        String raw,
-        String host,
-        String method,
-        String cookie,
-        String uir,
-        String user_agent,
-        String connection,
-        String accept,
-        String accept_lang,
-        String authorazation,
-        String httpV
-               
-    ) {
-        this.path=path;
-        this.http_version=httpV;
-        this.accept = accept;
-        this.rawHeader = raw;
-        this.connection = connection;
-        this.accept_lang = accept_lang;
-        this.upgrade_insecure_request = uir;
-        this.user_agent = user_agent;
-        this.host = host;
-        this.method = method;
-        this.authorization = authorazation;
-    }
-
-
-public static Response fromContext(Request data){
-   
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SASL Chatbot - WeThinkCode Cohort 2025</title>
     
-    return  data;
-   
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+""";
+
+
+  
+
+
+
+public void send(String data){
+
+this.sendable = data;
 }
- public String getPath(){return this.path; }
+public void calculate(){
+ this.Content_len=this.sendable.length();
+}
+public String get_header(){
+   Map<String,String> head= new HashMap();
+  
+  this.calculate();
+head.put("Vary", Vary);
+head.put("Content-Type", Content_Type);
+head.put("Cache-Control", Cache_Control);
+head.put("Etag", Etag);
+head.put("Date",Date);
+head.put("Connection", Connection);
+head.put("Keep-Alive", Keep_Alive);
+head.put("Content-Length", String.valueOf(Content_len));
 
- public String getMethod(){return this.method; }
+String response = """
+HTTP/1.1 200 OK
+Vary: Origin
+Content-Type: text/html
+Cache-Control: no-cache
+Etag: W/"288-mGR3sQgfYIpy8jQU0NkLVk2Tk3c"
+Date: Tue, 06 Jan 2026 14:36:52 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Content-Length: 2
 
- public String getConnection(){return this.connection; }
+Hi
+""";//head.toString();
+
+
+ //response = String.format("%S\n%S %S",head,response,sendable);
+return response;
+}
  
- public String getUserAgent(){return this.user_agent; }
- 
- public String getCookie(){return this.cookie; }
-
- public String getRawHeader(){return this.rawHeader; }
-
 
 }
