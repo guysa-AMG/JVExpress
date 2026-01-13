@@ -15,30 +15,7 @@ protected String Date= "Tue, 06 Jan 2026 14,36,52 GMT";
 protected String Connection= "keep-alive";
 protected String Keep_Alive= "timeout=5";
 protected int Content_len = 648;
-protected String sendable="""
-<!doctype html>
-<html lang="en">
-  <head>
-    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
-injectIntoGlobalHook(window);
-window.$RefreshReg$ = () => {};
-window.$RefreshSig$ = () => (type) => type;</script>
-
-    <script type="module" src="/@vite/client"></script>
-
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SASL Chatbot - WeThinkCode Cohort 2025</title>
-    
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
-
-""";
+protected String sendable="";
 
 
   
@@ -52,6 +29,33 @@ this.sendable = data;
 public void calculate(){
  this.Content_len=this.sendable.length();
 }
+public String data(){
+  return this.sendable;
+}
+
+public String get_not_found(){
+
+  String response = String.format("""
+HTTP/1.1 404 Not Found
+Vary: Origin
+Content-Type: text/html
+Cache-Control: no-cache
+Etag: W/"288-mGR3sQgfYIpy8jQU0NkLVk2Tk3c"
+Date: Tue, 06 Jan 2026 14:36:52 GMT
+Connection: keep-alive
+X-Powered-By: JVExpress
+Keep-Alive: timeout=5
+
+"""
+
+
+
+, this.sendable.length(),this.sendable);//head.toString();
+
+
+return response;
+}
+
 public String get_header(){
    Map<String,String> head= new HashMap();
   
@@ -65,7 +69,7 @@ head.put("Connection", Connection);
 head.put("Keep-Alive", Keep_Alive);
 head.put("Content-Length", String.valueOf(Content_len));
 
-String response = """
+String response = String.format("""
 HTTP/1.1 200 OK
 Vary: Origin
 Content-Type: text/html
@@ -73,11 +77,16 @@ Cache-Control: no-cache
 Etag: W/"288-mGR3sQgfYIpy8jQU0NkLVk2Tk3c"
 Date: Tue, 06 Jan 2026 14:36:52 GMT
 Connection: keep-alive
+X-Powered-By: JVExpress
 Keep-Alive: timeout=5
-Content-Length: 2
+Content-Length: %S
 
-Hi
-""";//head.toString();
+%S
+"""
+
+
+
+, this.sendable.length(),this.sendable);//head.toString();
 
 
  //response = String.format("%S\n%S %S",head,response,sendable);

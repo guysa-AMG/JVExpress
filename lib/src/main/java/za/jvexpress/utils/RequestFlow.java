@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
 
 import za.jvexpress.struct.DropRouteException;
 import za.jvexpress.struct.Middleware;
@@ -46,14 +44,17 @@ public void run(Request req,Response res) throws DropRouteException{
      log.print(path);
     ReqFunction func = nx.get(method);
    if(func !=null)
-   log.print(method+" found");
     {
     run_middle(req,res);
     if(!middlerator.hasNext()){func.handle(req, res);}
     else{
       throw new DropRouteException();
     }
-    }}
+    }}else{
+      throw new DropRouteException();
+    }
+
+  
 
 }
 

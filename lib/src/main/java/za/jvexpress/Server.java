@@ -1,7 +1,6 @@
 package za.jvexpress;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -106,21 +105,32 @@ public  class Server extends RequestFlow{
         try {
            this.run(req, response); 
            String d =response.get_header();
+           
            SocketChannel client= (SocketChannel) key.channel();
 
            Charset charset= Charset.forName("UTF-8");
            ByteBuffer bf = charset.encode(d);
+           
             try {
-               client.write(bf); 
+               client.write(bf);
+               key.interestOps(SelectionKey.OP_READ); 
                
-            } catch (IOException ex) {
-                log.eprint(ex);
-            }
+            } catch (IOException ex) { log.eprint(ex); }
            
 
         } catch (DropRouteException e) {
-            log.eprint(e);
            
+            SocketChannel client = (SocketChannel) key.channel();
+
+           String no404 = response.get_not_found();
+           Charset nfcharset = Charset.forName("UTF-8");
+           ByteBuffer buffer = nfcharset.encode(no404);
+           
+           try{
+               client.write(buffer);
+               key.interestOps(SelectionKey.OP_READ);
+           
+           } catch (IOException er) { log.eprint(er);}
         }
 
          

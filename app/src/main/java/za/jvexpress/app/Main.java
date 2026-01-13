@@ -12,9 +12,10 @@ public class Main{
       
      app.get("/",(req, res)->{
 
-   
+   res.send("<h1>HI</h1>");
     
      });
+  
 
      app.listen();
     }
