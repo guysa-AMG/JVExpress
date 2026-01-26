@@ -1,5 +1,9 @@
 package za.jvexpress.struct;
 
+import za.jvexpress.utils.Log;
+
+import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +20,21 @@ protected String Connection= "keep-alive";
 protected String Keep_Alive= "timeout=5";
 protected int Content_len = 648;
 protected String sendable="";
+protected Log log;
 
-
+ public Response(){
+     this.log = new Log();
+ }
   
 
+public void sendFile(String filename)
+{
+    String pack = Response.class.getPackageName();
+    String package_dir = pack.replace(".","/")+"/template/index.html";
+    InputStream inpf = Response.class.getClassLoader().getResourceAsStream(package_dir);
+    System.out.println(inpf);
 
+}
 
 public void send(String data){
 
@@ -82,11 +96,7 @@ Keep-Alive: timeout=5
 Content-Length: %S
 
 %S
-"""
-
-
-
-, this.sendable.length(),this.sendable);//head.toString();
+""",this.sendable.length(),this.sendable);//head.toString();
 
 
  //response = String.format("%S\n%S %S",head,response,sendable);
