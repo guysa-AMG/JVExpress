@@ -3,6 +3,7 @@ package za.jvexpress.struct;
 import za.jvexpress.utils.Log;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,11 +30,26 @@ protected Log log;
 
 public void sendFile(String filename)
 {
-    String pack = Response.class.getPackageName();
-    String package_dir = pack.replace(".","/")+"/template/index.html";
+
+    String package_dir =String.format("za/jvexpress/app/template/%s",filename);
+   ;
     InputStream inpf = Response.class.getClassLoader().getResourceAsStream(package_dir);
     System.out.println(inpf);
+    StringBuilder str_builder = new StringBuilder();
 
+     try{
+         int data = -1;
+         if (inpf != null) {
+             data = inpf.read();
+         }
+         while (data != -1) {
+             str_builder.append((char)data);
+            data = inpf.read();
+        }
+    }catch (IOException except){
+        log.eprint(except);
+    }
+     this.sendable=str_builder.toString();
 }
 
 public void send(String data){

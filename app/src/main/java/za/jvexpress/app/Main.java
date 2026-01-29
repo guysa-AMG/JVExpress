@@ -17,8 +17,8 @@ public class Main{
       app.init();
       
      app.get("/",(req, res)->{
-
-   res.send("<h1>HI</h1>");
+   res.sendFile("index.html");
+ ;
     
      });
   

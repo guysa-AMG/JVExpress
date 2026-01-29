@@ -50,6 +50,8 @@ public  class Server extends RequestFlow{
     }
       log = new Log();
       Runtime.getRuntime().addShutdownHook(new Thread(()->{this.onClose();}));
+
+
     }
   
     public void onClose(){
