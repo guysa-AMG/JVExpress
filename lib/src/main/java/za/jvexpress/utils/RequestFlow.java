@@ -51,7 +51,12 @@ public void run(Request req,Response res) throws DropRouteException{
       throw new DropRouteException();
     }
     }}else{
-      throw new DropRouteException();
+     if(path.startsWith("/public/")){
+         res.sendFile(path);
+     }
+        else{
+          throw new DropRouteException();
+      }
     }
 
   
