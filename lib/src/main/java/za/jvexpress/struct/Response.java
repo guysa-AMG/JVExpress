@@ -5,6 +5,9 @@ import za.jvexpress.utils.Log;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -86,6 +89,7 @@ Keep-Alive: timeout=5
 return response;
 }
 private String getCurrentTime(){
+
 DateTimeFormatter format = DateTimeFormatter
                                   .ofPattern("EE, dd MMM yyyy HH:mm:ss 'GMT'",Locale.ENGLISH)
                                   .withZone(ZoneId.of("+2"));
