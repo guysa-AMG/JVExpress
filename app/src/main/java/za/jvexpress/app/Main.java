@@ -14,8 +14,8 @@ public class Main{
       app.init();
       
      app.get("/",(req, res)->{
-
    res.sendFile("index.html");
+
     
      });
   

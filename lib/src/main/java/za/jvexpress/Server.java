@@ -50,6 +50,8 @@ public  class Server extends RequestFlow{
     }
       log = new Log();
       Runtime.getRuntime().addShutdownHook(new Thread(()->{this.onClose();}));
+
+
     }
   
     public void onClose(){
@@ -179,6 +181,7 @@ public  class Server extends RequestFlow{
              }
     }
     public void listen(){
+      
         boolean loop=true;                                         
         log.libprint("[initializer] Web Server Started",LogLevel.VERBOSE);
         
