@@ -1,8 +1,10 @@
 package za.jvexpress.struct;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import za.jvexpress.utils.Log;
+
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -20,11 +22,36 @@ protected String Connection= "keep-alive";
 protected String Keep_Alive= "timeout=5";
 protected int Content_len = 0;
 protected String sendable="";
+protected Log log;
 
-
+ public Response(){
+     this.log = new Log();
+ }
   
 
+public void sendFile(String filename)
+{
 
+    String package_dir =String.format("za/jvexpress/app/template/%s",filename);
+   ;
+    InputStream inpf = Response.class.getClassLoader().getResourceAsStream(package_dir);
+    System.out.println(inpf);
+    StringBuilder str_builder = new StringBuilder();
+
+     try{
+         int data = -1;
+         if (inpf != null) {
+             data = inpf.read();
+         }
+         while (data != -1) {
+             str_builder.append((char)data);
+            data = inpf.read();
+        }
+    }catch (IOException except){
+        log.eprint(except);
+    }
+     this.sendable=str_builder.toString();
+}
 
 public void send(String data){
 

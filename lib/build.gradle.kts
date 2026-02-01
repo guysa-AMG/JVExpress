@@ -4,8 +4,68 @@
 
 plugins {
     id("buildlogic.java-application-conventions")
+    id("maven-publish")
+    signing
 }
 
+group = "io.github.guysa-AMG"
+version = "0.0.1"
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+publishing{
+    publications{
+        create<MavenPublication>("mavenJava"){
+            from(components["java"])
+
+            pom{
+                name.set("jvexpress")
+                description.set("A real-time AI hand gesture translator core.")
+                url.set("http://github.com/guysa-AMG/JVExpress")
+
+                licenses{
+                    license{
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers{
+                    developer {
+                        id.set("guysa-AMG")
+                        name.set("Guysa Ahmed Muhammed")
+                        email.set("amguysa7@gmail.com")
+                    }
+                }
+
+                scm{
+                    connection.set("scm:git:git://github.com/guysa-AMG/JVExpress.git")
+                    developerConnection.set("scm:git:ssh://github.com/guysa-AMG/JVExpress.git")
+                    url.set("https://github.com/guysa-AMG/JVExpress")
+                }
+            }
+        }
+    }
+
+    repositories{
+        maven{
+            name = "OSSRH"
+            url = uri("https://central.sonatype.com/api/v1/publisher/deployments/ossrh")
+            credentials {
+                username = providers.gradleProperty("centralPortalUsername").orNull
+                password = providers.gradleProperty("centralPortalPassword").orNull
+                }
+        }
+    }
+}
+signing{
+    val isPublishing = gradle.taskGraph.hasTask("lib:publishMavenJavaPublicationToOSSRHRepository")
+    setRequired({
+        isPublishing
+    })
+    sign(publishing.publications["mavenJava"])
+}
 
 
 
