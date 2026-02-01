@@ -3,9 +3,6 @@ package za.jvexpress.app;
 
 import za.jvexpress.Server;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 public class Main{
 
     
@@ -18,7 +15,7 @@ public class Main{
       
      app.get("/",(req, res)->{
 
-   res.send("<h1>HI</h1>");
+   res.sendFile("index.html");
     
      });
   
