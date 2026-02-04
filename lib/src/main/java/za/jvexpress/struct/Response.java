@@ -55,7 +55,16 @@ public void sendFile(String filename)
     }
      this.sendable=str_builder.toString();
 }
-
+public void sendJson(Map data){
+log.print(data.toString());
+StringBuilder builder = new StringBuilder();
+this.Content_Type=MimeType.JSON;
+builder.append("{");
+data.forEach((k,v)->builder.append(String.format("\"%s\":\"%s\",",k,v)));
+builder.deleteCharAt(builder.length()-1);
+builder.append("}");
+this.sendable=builder.toString();
+}
 public void send(String data){
 
 this.sendable = data;

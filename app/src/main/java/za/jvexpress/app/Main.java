@@ -3,6 +3,8 @@ package za.jvexpress.app;
 
 import za.jvexpress.Server;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Main{
@@ -12,10 +14,14 @@ public class Main{
 
       Server app = new Server(8080);
       app.init();
+      Map data = new HashMap();
+      data.put("user","student");
+      data.put("email","amguysa7@gmail.com");
+      data.put("id","9035");
 
 
      app.get("/",(req, res)->{
-   res.sendFile("index.html");
+   res.sendJson(data);
    // res.send("Hi bro");
      });
 
