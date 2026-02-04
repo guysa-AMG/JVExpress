@@ -1,4 +1,5 @@
 ### GET request to example server
-GET https://localhost:8080/
+GET http://localhost:8080/
+
 
 ###

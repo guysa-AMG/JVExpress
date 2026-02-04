@@ -39,7 +39,7 @@ protected  String http_version;
         String connection,
         String accept,
         String accept_lang,
-        String authorazation,
+        String authorization,
         String httpV
                
     ) {
@@ -53,7 +53,7 @@ protected  String http_version;
         this.user_agent = user_agent;
         this.host = host;
         this.method = method;
-        this.authorization = authorazation;
+        this.authorization = authorization;
     }
 
 

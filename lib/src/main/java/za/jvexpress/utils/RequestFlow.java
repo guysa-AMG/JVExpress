@@ -45,8 +45,14 @@ public void run(Request req,Response res) throws DropRouteException{
     ReqFunction func = nx.get(method);
    if(func !=null)
     {
+
+
+
+
+
     run_middle(req,res);
-    if(!middlerator.hasNext()){func.handle(req, res);}
+    if(!middlerator.hasNext()){
+        func.handle(req, res);}
     else{
       throw new DropRouteException();
     }

@@ -3,6 +3,8 @@ package za.jvexpress.app;
 
 import za.jvexpress.Server;
 
+
+
 public class Main{
 
     
@@ -11,9 +13,10 @@ public class Main{
       Server app = new Server(8080);
       app.init();
 
+
      app.get("/",(req, res)->{
    res.sendFile("index.html");
-
+   // res.send("Hi bro");
      });
 
      app.listen();
