@@ -109,34 +109,18 @@ head.put("Connection", Connection);
 head.put("Keep-Alive", Keep_Alive);
 head.put("Server", "JVExpress");
 head.put("Content-Length", String.valueOf(Content_len));
+
 nstring.append("HTTP/1.1 200 OK\r\n");
 head.forEach( (k,v)->{
   nstring.append(String.format("%S: %S\r\n", k,v));
 } );
-
-System.out.println(nstring.toString());
-
-String response = String.format("""
-HTTP/1.1 200 OK
-Vary: Origin
-Content-Type: text/html
-
-Etag: W/"288-mGR3sQgfYIpy8jQU0NkLVk2Tk3c"
-
-X-Powered-By: JVExpress
-Keep-Alive: timeout=5
-Content-Length: %S
-
-%S
-"""
-
-
-
-, this.sendable.length(),this.sendable);//head.toString();
+nstring.append("\r\n");
+nstring.append(this.sendable);
 
 
  //response = String.format("%S\n%S %S",head,response,sendable);
-return response;
+    System.out.print(nstring.toString());
+return nstring.toString();
 }
  
 
