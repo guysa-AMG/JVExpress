@@ -1,16 +1,16 @@
 package za.jvexpress.struct;
 
-import za.jvexpress.utils.Log;
-
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import za.jvexpress.tool.HashMapParser;
+import za.jvexpress.utils.Log;
 
 
 public class Response{
@@ -56,14 +56,9 @@ public void sendFile(String filename)
      this.sendable=str_builder.toString();
 }
 public void sendJson(Map data){
-log.print(data.toString());
-StringBuilder builder = new StringBuilder();
+String jstring = HashMapParser.toJString(data);
 this.Content_Type=MimeType.JSON;
-builder.append("{");
-data.forEach((k,v)->builder.append(String.format("\"%s\":\"%s\",",k,v)));
-builder.deleteCharAt(builder.length()-1);
-builder.append("}");
-this.sendable=builder.toString();
+this.sendable=jstring;
 }
 public void send(String data){
 
