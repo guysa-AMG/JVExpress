@@ -1,4 +1,4 @@
-![alt text](image.png)
+
 # JVExpress
 A lightweight, high-performance Java web framework built from the ground up using raw Java Sockets. Designed for developers who want the simplicity of Node's Express.js with the robust multi-threading capabilities of the JVM.
  Features
@@ -26,5 +26,8 @@ Unlike high-level frameworks that hide the networking layer, this project implem
   <li>  Execution: The router matches the path to a user-defined lambda function.</li>
 
   <li>  Transmission: The Response object flushes the status code and data back through the socket.
+   
+<h3>WHY?</h3>
+most libraries like (Spring boot) are to powerful and abstract and a bit overwhelming for beginner 
 
 </li>
