@@ -1,7 +1,7 @@
 package za.jvexpress.struct;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class Request{
@@ -59,7 +59,7 @@ protected  String http_version;
 
 public static Request fromData(String data){
     String[] lines =data.split("\r\n");
-    Map<String,String> collection =new HashMap();
+    Map<String,String> collection =new TreeMap<>();
     String method = lines[0].split(" ")[0];
     String path = lines[0].split(" ")[1];
     String httpVersion = lines[0].split(" ")[2];
