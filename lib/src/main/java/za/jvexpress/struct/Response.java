@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,7 +55,7 @@ public void sendFile(String filename)
     }
      this.sendable=str_builder.toString();
 }
-public void sendJson(Map data){
+public void sendJson(LinkedHashMap data){
 String jstring = HashMapParser.toJString(data);
 this.Content_Type=MimeType.JSON;
 this.sendable=jstring;
@@ -101,7 +101,7 @@ Instant ins = Instant.now();
 return format.format(ins);
 }
 public String get_header(){
-   Map<String,String> head= new HashMap();
+   Map<String,String> head= new LinkedHashMap<>();
   StringBuilder nstring=new StringBuilder();
   this.calculate();
 head.put("Vary", Vary);
@@ -116,9 +116,10 @@ head.put("Content-Length", String.valueOf(Content_len));
 
 nstring.append("HTTP/1.1 200 OK\r\n");
 head.forEach( (k,v)->{
-  nstring.append(String.format("%S: %S\r\n", k,v));
+  nstring.append(String.format("%s: %s\r\n", k,v));
 } );
 nstring.append("\r\n");
+
 nstring.append(this.sendable);
 
 

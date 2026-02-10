@@ -66,7 +66,7 @@ public  class Server extends RequestFlow{
     }
     
     public  void init(){
-       InetSocketAddress bindpoint =new InetSocketAddress("0.0.0.0",8080);
+       InetSocketAddress bindpoint =new InetSocketAddress("0.0.0.0",this.port);
         try {
             sock.bind(bindpoint);
             sock.configureBlocking(false);
