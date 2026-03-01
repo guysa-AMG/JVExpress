@@ -24,6 +24,7 @@ protected String Date= "Tue, 06 Jan 2026 14,36,52 GMT";
 protected String Connection= "keep-alive";
 protected String Keep_Alive= "timeout=5";
 protected int Content_len = 0;
+protected String Cookie;
 protected String sendable="";
 protected Log log;
 
@@ -70,7 +71,10 @@ public void calculate(){
 public String data(){
   return this.sendable;
 }
+public void setCookie(String name,String value){
+    this.Cookie=String.format("%s=%s",name,value);
 
+}
 public String get_not_found(){
 
   String response = String.format("""
@@ -84,8 +88,6 @@ X-Powered-By: JVExpress
 Keep-Alive: timeout=5
 
 """
-
-
 
 , this.sendable.length(),this.sendable);//head.toString();
 
@@ -113,7 +115,9 @@ head.put("Connection", Connection);
 head.put("Keep-Alive", Keep_Alive);
 head.put("Server", "JVExpress");
 head.put("Content-Length", String.valueOf(Content_len));
-
+if (this.Cookie != null){
+head.put("Set-Cookie",this.Cookie);
+}
 nstring.append("HTTP/1.1 200 OK\r\n");
 head.forEach( (k,v)->{
   nstring.append(String.format("%s: %s\r\n", k,v));
