@@ -23,17 +23,9 @@ public class Main{
       hobby.put("player", "me");
       data.put("hobby", hobby);
 
-        LinkedHashMap m = new LinkedHashMap();
-        m.put("user","student");
-        m.put("email","amguysa7@gmail.com");
-        m.put("id","9035");
-        Map b = new LinkedHashMap();
-        b.put("sport", "rugby");
-        b.put("player", "me");
-        m.put("hobby", b);
-        data.put("some",m);
 
      app.get("/",(req, res)->{
+     // res.setCookie("registered", "true");
        res.sendJson(data);
     //res.send("Hi bro");
      });

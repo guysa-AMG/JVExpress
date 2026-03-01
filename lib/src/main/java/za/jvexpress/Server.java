@@ -53,7 +53,10 @@ public  class Server extends RequestFlow{
 
 
     }
-  
+    
+    public String getPort(){
+        return Integer.toString(this.port);
+    }
     public void onClose(){
          try{
                 log.print("Closing Application");
