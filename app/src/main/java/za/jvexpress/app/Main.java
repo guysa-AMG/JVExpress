@@ -3,7 +3,7 @@ package za.jvexpress.app;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import za.jvexpress.struct.Cookie;
 import za.jvexpress.Server;
 
 
@@ -25,7 +25,8 @@ public class Main{
 
 
      app.get("/",(req, res)->{
-     // res.setCookie("registered", "true");
+      Cookie mec = new Cookie("user","GuySA");
+      res.setCookie(mec);
        res.sendJson(data);
     //res.send("Hi bro");
      });

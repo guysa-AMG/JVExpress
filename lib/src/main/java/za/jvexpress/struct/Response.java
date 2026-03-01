@@ -71,8 +71,9 @@ public void calculate(){
 public String data(){
   return this.sendable;
 }
-public void setCookie(String name,String value){
-    this.Cookie=String.format("%s=%s",name,value);
+public void setCookie(Cookie cookie){
+
+    this.Cookie=cookie.toCookieFormat();
 
 }
 public String get_not_found(){
