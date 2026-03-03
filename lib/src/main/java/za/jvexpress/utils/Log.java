@@ -8,6 +8,7 @@ public  class Log{
 public static enum LogLevel{
         VERBOSE,
         INFO,
+        OK,
         WARNING,
         ERROR
 };
@@ -21,7 +22,12 @@ public static enum LogLevel{
         System.err.println(ex);
     }
     public void libprint(String data,LogLevel lvl){
-        
+        if (lvl == LogLevel.ERROR){
+            System.out.printf("\033[91m[x]\033[00m %s\n",data);
+        }
+        if (lvl == LogLevel.OK){
+            System.out.printf("\033[92m[x]\033[00m %s\n",data);
+        }
         System.out.println(data);
     }
 }
