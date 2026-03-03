@@ -89,7 +89,7 @@ public static Request fromData(String data){
  public String getPath(){return this.path; }
 
  public String getMethod(){return this.method; }
-
+public String getAuthorization(){return this.authorization;};
  public String getConnection(){return this.connection; }
  
  public String getUserAgent(){return this.user_agent; }
