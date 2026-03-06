@@ -26,31 +26,25 @@ public  class Server extends RequestFlow{
     private Selector selector;
     private Log log;
    
-    
+    private Boolean should_close_after_one_request=false;
    
     private int port;
     
 
     public Server(int qport) {
         
-        if(qport==0){
-            port =8080;
-        }
-        else{
-            port =qport;
-        }
+        if(qport==0){port =8080; }
+        else{ port =qport; }
         port = qport;
     try {
         sock =  ServerSocketChannel.open();
          selector=  Selector.open();
          
     } 
-    catch (IOException e) {
-        log.eprint(e);
-    }
+    catch (IOException e) { log.eprint(e); }
+
       log = new Log();
       Runtime.getRuntime().addShutdownHook(new Thread(()->{this.onClose();}));
-
 
     }
     
@@ -141,6 +135,10 @@ public  class Server extends RequestFlow{
          
      
     }
+    public void isTesting(){
+        log.libprint("Closing after single request", LogLevel.OK);
+        this.should_close_after_one_request = true;
+    }
     public void RequestInterpreter(SelectionKey key){
 
     SocketChannel client = (SocketChannel) key.channel();
@@ -183,6 +181,7 @@ public  class Server extends RequestFlow{
                  log.eprint(e);
              }
     }
+    
     public void listen(){
       
         boolean loop=true;                                         
@@ -190,6 +189,7 @@ public  class Server extends RequestFlow{
         
         while (loop) { 
             try {
+               
             selector.select();
             } catch (IOException e) {
             log.eprint(e);
@@ -208,7 +208,9 @@ public  class Server extends RequestFlow{
                 }
             }
             
-
+             if (should_close_after_one_request){
+                    loop=false;
+                }
         }
        
     }

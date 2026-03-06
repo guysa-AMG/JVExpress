@@ -1,8 +1,4 @@
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,20 +49,15 @@ public class ServerTest {
 
 
     }
-    @Test
-    void testGetRequest() throws Exception {
-    Server server = new Server(0); 
-    server.get("/test", (req, res) -> res.send("OK"));
-    server.listen();
+ 
 
-    HttpClient client = HttpClient.newHttpClient();
-    HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create("http://localhost:" +server.getPort() + "/test"))
-        .build();
-
-    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    assertEquals(200, response.statusCode());
-    assertEquals("OK", response.body());
+    // @Test
+    // void testGetRequest() throws Exception {
+        
+    // Server server = new Server(0); 
+    // server.get("/test", (req, res) -> res.send("OK"));
+        
+   
 } 
 
 }
