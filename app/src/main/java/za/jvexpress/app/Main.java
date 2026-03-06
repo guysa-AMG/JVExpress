@@ -1,10 +1,8 @@
 package za.jvexpress.app;
 
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import za.jvexpress.struct.Cookie;
 import za.jvexpress.Server;
+import za.jvexpress.struct.Cookie;
 
 
 public class Main{
@@ -14,21 +12,13 @@ public class Main{
 
       Server app = new Server(8089);
       app.init();
-      LinkedHashMap data = new LinkedHashMap();
-      data.put("user","student");
-      data.put("email","amguysa7@gmail.com");
-      data.put("id","9035");
-      Map hobby = new LinkedHashMap();
-      hobby.put("sport", "rugby");
-      hobby.put("player", "me");
-      data.put("hobby", hobby);
-
+  
 
      app.get("/",(req, res)->{
       Cookie mec = new Cookie("user","GuySA");
       res.setCookie(mec);
-       res.sendJson(data);
-    //res.send("Hi bro");
+  
+    res.send("Hi bro");
      });
 
      app.listen();
