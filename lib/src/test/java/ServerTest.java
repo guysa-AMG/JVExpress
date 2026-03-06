@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import za.jvexpress.Server;
 import za.jvexpress.tool.HashMapParser;
 
 
@@ -58,6 +57,6 @@ public class ServerTest {
     // server.get("/test", (req, res) -> res.send("OK"));
         
    
-} 
+
 
 }
