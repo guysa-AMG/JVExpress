@@ -9,6 +9,8 @@ plugins {
 dependencies {
     implementation(project(":lib"))
     implementation("org.apache.commons:commons-text")
+    implementation(libs.mongo.driver)
+     implementation(libs.mongo.driver.sync)
 
 }
 
