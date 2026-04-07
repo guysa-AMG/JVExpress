@@ -14,18 +14,18 @@ public class Main{
       app.init();
   
 
-     app.get("http://example.com",(req, res)->{
+     app.get("/user",(req, res)->{
+      res.send("Hi "+req.getQueries().get("user").get("name"));
+     });
+
+
+      app.get("/",(req, res)->{
       Cookie mec = new Cookie("user","GuySA");
       res.setCookie(mec);
-  
-    res.send("Hi bro");
+      res.send("Hi bro");
      });
-      app.get("http://example.com/user?name=john&password=mark",(req, res)->{
-      Cookie mec = new Cookie("user","GuySA");
-      res.setCookie(mec);
-  
-    res.send("Hi bro");
-     });
+
+
      app.listen();
     }
 }

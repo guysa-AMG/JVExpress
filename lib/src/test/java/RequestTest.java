@@ -25,7 +25,7 @@ class RequestTest{
                         "Sec-Fetch-Site: none\n" + //
                         "Priority: u=0, i";
     Request req =Request.fromData(rawResponse);
-    String queries = req.getQueries();
+    String queries = req.getQueries().toString();
     String expectedString="{user={name=john}}";
     assertEquals(expectedString,queries);
     }
@@ -46,7 +46,7 @@ class RequestTest{
                         "Sec-Fetch-Site: none\n" + //
                         "Priority: u=0, i";
     Request req =Request.fromData(rawResponse);
-    String queries = req.getQueries();
+    String queries = req.getQueries().toString();
     String expectedString="{user={name=john, age=50}}";
     assertEquals(expectedString,queries);
     }
@@ -66,7 +66,7 @@ class RequestTest{
                         "Sec-Fetch-Site: none\n" + //
                         "Priority: u=0, i";
     Request req =Request.fromData(rawResponse);
-    String queries = req.getQueries();
+    String queries = req.getQueries().toString();
     String expectedString="{user={name=john, age=null}}";
     assertEquals(expectedString,queries);
     }

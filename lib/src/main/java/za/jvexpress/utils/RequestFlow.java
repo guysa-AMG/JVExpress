@@ -38,12 +38,13 @@ public void run(Request req,Response res) throws DropRouteException{
     String method = req.getMethod();
     String path = req.getPath();
 
-  Map<String,ReqFunction> nx = routes.get(path);
+  Map<String,ReqFunction> nx = routes.get(method);
  
   if(nx!=null)
   {
-     log.print(path);
-    ReqFunction func = nx.get(method);
+     log.print(routes.toString());
+      log.print(req.toString());
+    ReqFunction func = nx.get(path);
    if(func !=null)
     {
     run_middle(req,res);
