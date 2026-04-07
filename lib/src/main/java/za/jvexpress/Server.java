@@ -165,8 +165,6 @@ public  class Server extends RequestFlow{
     }catch(IOException ex){
         log.eprint(ex);
     }
-
-
     
     }
     public void Acceptence(SelectionKey select){
