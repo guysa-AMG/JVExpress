@@ -1,5 +1,6 @@
 package za.jvexpress.struct;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,6 +16,7 @@ protected String accept_encoding;
 protected String cookie;
 protected String upgrade_insecure_request;
 protected String connection;
+protected Map<String,?> queries;
 protected String sec_fetch_dest;
 protected String sec_fetch_mode;
 protected String sec_fetch_site;
@@ -40,7 +42,8 @@ protected  String http_version;
         String accept,
         String accept_lang,
         String authorization,
-        String httpV
+        String httpV,
+        Map<String,?> queries
                
     ) {
         this.path=path;
@@ -54,6 +57,7 @@ protected  String http_version;
         this.host = host;
         this.method = method;
         this.authorization = authorization;
+        this.queries = queries;
     }
 
 
@@ -69,6 +73,51 @@ public static Request fromData(String data){
     collection.put(dx[0],dx[1]);
     }
     }
+    Map<String,Map<String,String>> queries = new HashMap<>();
+   for (String index:path.split("/")){
+   
+    if (index.contains("?")){
+        
+        
+        String[] routeQuStrings = index.split("\\?");
+       
+        if (routeQuStrings[1].contains("&")){
+              Map<String,String> singleQuerie=null; 
+              singleQuerie = new HashMap<>();
+            for(String que:routeQuStrings[1].split("&")){
+                if (que.contains("=")){
+
+                String[] singleData =que.split("=");
+               
+                singleQuerie.put(singleData[0], singleData[1]);
+             }
+             else{
+                singleQuerie.put(que,null);
+             }
+             
+            }
+             queries.put(routeQuStrings[0],singleQuerie);
+
+        }
+        else{
+
+
+            Map<String,String> singleQuerie=null;
+            if (index.contains("=")){
+
+                String[] singleData =routeQuStrings[1].split("=");
+                singleQuerie = new HashMap<>();
+                singleQuerie.put(singleData[0], singleData[1]);
+             }
+             System.out.printf("%s : %s\n", routeQuStrings[0],singleQuerie);
+             queries.put(routeQuStrings[0],singleQuerie);
+
+        }
+
+
+    }
+   }
+   
     return new Request(
         path,
         data,
@@ -81,7 +130,8 @@ public static Request fromData(String data){
         collection.get("Accept"),
         collection.get("Accept-Language"),
         collection.get("Authorization"),
-        httpVersion 
+        httpVersion,
+        queries
            
     );
    

@@ -48,7 +48,11 @@ public class ServerTest {
 
 
     }
- 
+    
+    @Test
+    void testQueryParameters(){
+        
+    }
 
     // @Test
     // void testGetRequest() throws Exception {

@@ -1,5 +1,6 @@
 package  za.jvexpress.utils;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,7 +29,7 @@ this.middlewares.add(middlew);
 
 }
 
-public void route(String path,String method,ReqFunction func){this.routes.put(method,Map.of(path, func));};
+public void route(String method,String path,ReqFunction func){this.routes.put(method,Map.of(path, func));};
 
 
 public void run(Request req,Response res) throws DropRouteException{
@@ -45,11 +46,6 @@ public void run(Request req,Response res) throws DropRouteException{
     ReqFunction func = nx.get(method);
    if(func !=null)
     {
-
-
-
-
-
     run_middle(req,res);
     if(!middlerator.hasNext()){
         func.handle(req, res);}
