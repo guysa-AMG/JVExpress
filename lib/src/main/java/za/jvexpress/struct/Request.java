@@ -16,7 +16,7 @@ protected String accept_encoding;
 protected String cookie;
 protected String upgrade_insecure_request;
 protected String connection;
-protected Map<String,?> queries;
+protected Map<String,Map<String,?>> queries;
 protected String sec_fetch_dest;
 protected String sec_fetch_mode;
 protected String sec_fetch_site;
@@ -43,7 +43,7 @@ protected  String http_version;
         String accept_lang,
         String authorization,
         String httpV,
-        Map<String,?> queries
+        Map<String,Map<String,?>> queries
                
     ) {
         this.path=path;
@@ -74,14 +74,14 @@ public static Request fromData(String data){
     collection.put(dx[0].toLowerCase(),dx[1].trim());
     }
     }
-    Map<String,Map<String,String>> queries = new HashMap<>();
+    Map<String,Map<String,?>> queries = new HashMap<>();
    for (String index:path.split("/")){
    
     if (index.contains("?")){
         
         
         String[] routeQuStrings = index.split("\\?");
-       
+       path=routeQuStrings[0];
         if (routeQuStrings[1].contains("&")){
               Map<String,String> singleQuerie=null; 
               singleQuerie = new HashMap<>();
@@ -140,6 +140,9 @@ public static Request fromData(String data){
  public String getPath(){return this.path; }
 public String getQueries(){
     return this.queries.toString();
+}
+public Map<String,Map<String,?>> getQues(){
+    return this.queries;
 }
  public String getMethod(){return this.method; }
 public String getAuthorization(){return this.authorization;};

@@ -14,11 +14,10 @@ public class Main{
       app.init();
   
 
-     app.get("http://example.com",(req, res)->{
-      Cookie mec = new Cookie("user","GuySA");
-      res.setCookie(mec);
+     app.get("/user",(req, res)->{
   
-    res.send("Hi bro");
+    res.send("Hi "+req.getQues().get("user").get("name"));
+    
      });
       app.get("http://example.com/user?name=john&password=mark",(req, res)->{
       Cookie mec = new Cookie("user","GuySA");
