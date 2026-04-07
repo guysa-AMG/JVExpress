@@ -55,6 +55,7 @@ protected  String http_version;
         this.upgrade_insecure_request = uir;
         this.user_agent = user_agent;
         this.host = host;
+        this.cookie=cookie;
         this.method = method;
         this.authorization = authorization;
         this.queries = queries;
@@ -68,9 +69,9 @@ public static Request fromData(String data){
     String path = lines[0].split(" ")[1];
     String httpVersion = lines[0].split(" ")[2];
     for(String line : lines){
-    String[] dx =line.split(":");
+    String[] dx =line.split(":",2);
     if (dx.length>1){
-    collection.put(dx[0],dx[1]);
+    collection.put(dx[0].toLowerCase(),dx[1].trim());
     }
     }
     Map<String,Map<String,String>> queries = new HashMap<>();
@@ -117,19 +118,19 @@ public static Request fromData(String data){
 
     }
    }
-   
+ 
     return new Request(
         path,
         data,
-        collection.get("Host"),
+        collection.get("host"),
         method,
-        collection.get("Cookie"),
-        collection.get("Upgrade-Insecure-Requests"),
-        collection.get("User-Agent"),
-        collection.get("Connection"),
-        collection.get("Accept"),
-        collection.get("Accept-Language"),
-        collection.get("Authorization"),
+        collection.get("cookie"),
+        collection.get("upgrade-insecure-requests"),
+        collection.get("user-agent"),
+        collection.get("connection"),
+        collection.get("accept"),
+        collection.get("accept-Language"),
+        collection.getOrDefault("authorization","cannot find token"),
         httpVersion,
         queries
            
@@ -137,7 +138,9 @@ public static Request fromData(String data){
    
 }
  public String getPath(){return this.path; }
-
+public String getQueries(){
+    return this.queries.toString();
+}
  public String getMethod(){return this.method; }
 public String getAuthorization(){return this.authorization;};
  public String getConnection(){return this.connection; }
