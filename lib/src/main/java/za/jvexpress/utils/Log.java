@@ -13,7 +13,7 @@ public static enum LogLevel{
         ERROR
 };
      public void route_print( String data){
-        System.out.println("\033[91m [ROUTE] %S \033[00m".formatted(data));
+        System.out.println("\033[91m [ROUTE] %s \033[00m".formatted(data));
     }
     public void print( String data){
         System.out.println(data);
