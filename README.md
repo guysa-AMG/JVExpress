@@ -29,16 +29,14 @@ import za.jvexpress.struct.Response;
 
 public class Main {
     public static void main(String[] args) {
-        // Create a new server instance on port 8080
+
         Server app = new Server(8080);
 
-        // Define a route for GET requests to the root path ("/")
         app.get("/", (Request req, Response res) -> {
-            // Send a "Hello, World!" response
+     
             res.send("Hello, World!");
         });
 
-        // Start the server
         app.listen();
     }
 }
