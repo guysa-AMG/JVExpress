@@ -1,5 +1,7 @@
 
-
+/**
+gradle build config
+ */
 
 plugins {
     id("buildlogic.java-application-conventions")
