@@ -6,9 +6,17 @@ import org.junit.jupiter.api.Test;
 
 import za.jvexpress.tool.HashMapParser;
 
-
+/**
+ * Unit tests for JSON serialization from LinkedHashMap objects.
+ * Tests single-level and nested object conversion to JSON format.
+ * Validates proper quote escaping and formatting in generated JSON.
+ */
 public class ServerTest {
 
+    /**
+     * Tests converting a flat LinkedHashMap to JSON format.
+     * Verifies that string values are properly quoted and key-value pairs are correctly formatted.
+     */
     @Test
     public void test_json_parser(){
         LinkedHashMap data =new LinkedHashMap<String,String>();
@@ -24,6 +32,11 @@ public class ServerTest {
         System.err.println(ret);
         assertEquals(expected, ret);
     }
+    
+    /**
+     * Tests converting a nested LinkedHashMap (parent containing child object) to JSON format.
+     * Verifies that nested objects are properly recursively converted and formatted.
+     */
     @Test
     public void nest_parser(){
         LinkedHashMap child =new LinkedHashMap<String,String>();
@@ -49,6 +62,10 @@ public class ServerTest {
 
     }
     
+    /**
+     * Placeholder test for query parameter functionality.
+     * Currently empty - intended for future query parameter testing.
+     */
     @Test
     void testQueryParameters(){
         

@@ -4,13 +4,25 @@ import java.util.LinkedHashMap;
 
 import za.jvexpress.utils.Log;
 
+/**
+ * Utility class for converting Java data structures to JSON format.
+ * Handles nested LinkedHashMaps and string values.
+ * Produces valid JSON output with proper formatting.
+ */
 public class HashMapParser {
     private Log log;
     public HashMapParser() {
         log = new Log();
     }
 
-    
+    /**
+     * Converts a LinkedHashMap to a JSON string.
+     * Recursively handles nested LinkedHashMaps.
+     * String values are properly quoted in the output.
+     * 
+     * @param data The LinkedHashMap to convert
+     * @return A JSON-formatted string representation of the data
+     */
     public static String toJString(LinkedHashMap data){
 
    

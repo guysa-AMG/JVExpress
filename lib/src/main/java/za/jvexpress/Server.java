@@ -20,8 +20,14 @@ import za.jvexpress.utils.Log.LogLevel;
 import za.jvexpress.utils.RequestContext;
 import za.jvexpress.utils.RequestFlow;
 
+/**
+ * HTTP server implementation using NIO (Non-blocking I/O) with a selector-based architecture.
+ * Extends RequestFlow to support HTTP routing and middleware processing.
+ * Handles concurrent connections using Java NIO Selector for scalable event-driven handling.
+ * Supports HTTP methods: GET, POST, PATCH, PUT, DELETE.
+ */
 
-public  class Server extends RequestFlow{
+public  class Server extends RequestFlow {
     private ServerSocketChannel sock; 
     private Selector selector;
     private Log log;
@@ -30,7 +36,13 @@ public  class Server extends RequestFlow{
    
     private int port;
     
-
+    /**
+     * Constructs a Server with a specified port.
+     * Initializes the ServerSocketChannel and Selector for NIO operations.
+     * Sets up a shutdown hook to gracefully close resources on application exit.
+     * 
+     * @param qport The port number to bind the server to. Defaults to 8080 if 0 is provided.
+     */
     public Server(int qport) {
         
         if(qport==0){port =8080; }
@@ -47,10 +59,18 @@ public  class Server extends RequestFlow{
       Runtime.getRuntime().addShutdownHook(new Thread(()->{this.onClose();}));
 
     }
-    
+    /**
+     * Retrieves the port number the server is bound to.
+     * @return String representation of the server port
+     */
     public String getPort(){
         return Integer.toString(this.port);
     }
+    
+    /**
+     * Gracefully closes the server resources when the application terminates.
+     * Closes the Selector and ServerSocketChannel.
+     */
     public void onClose(){
          try{
                 log.print("Closing Application");
@@ -62,7 +82,11 @@ public  class Server extends RequestFlow{
         
     }
     
-    public  void init(){
+    /**
+     * Initializes the server by binding to the specified port and registering the ServerSocketChannel
+     * with the Selector for accepting incoming connections.
+     */
+    public void init(){
        InetSocketAddress bindpoint =new InetSocketAddress("0.0.0.0",this.port);
         try {
             sock.bind(bindpoint);
@@ -75,20 +99,59 @@ public  class Server extends RequestFlow{
         log.eprint(e);
         }  
     }
+    
+    /**
+     * Registers a GET route with the server.
+     * @param path The URL path for this route
+     * @param callback The handler function to execute when this route is accessed
+     */
     public void get(String path,ReqFunction callback){this.route("GET",path, callback);}
     
+    /**
+     * Registers a POST route with the server.
+     * @param path The URL path for this route
+     * @param callback The handler function to execute when this route is accessed
+     */
     public void post(String path,ReqFunction callback){this.route("POST",path, callback);}
     
+    /**
+     * Registers a PATCH route with the server.
+     * @param path The URL path for this route
+     * @param callback The handler function to execute when this route is accessed
+     */
     public void patch(String path,ReqFunction callback){this.route("PATCH",path, callback);}
     
+    /**
+     * Registers a PUT route with the server.
+     * @param path The URL path for this route
+     * @param callback The handler function to execute when this route is accessed
+     */
     public void put(String path,ReqFunction callback){this.route("PUT",path, callback);}
     
+    /**
+     * Registers a DELETE route with the server.
+     * @param path The URL path for this route
+     * @param callback The handler function to execute when this route is accessed
+     */
     public void delete(String path,ReqFunction callback){this.route("DELETE",path, callback);}
     
+    /**
+     * Adds a middleware to the server's middleware chain.
+     * Middleware is executed for each request before route handlers.
+     * @param mid The middleware to add
+     */
     public void add(Middleware mid){
         this.add_Middleware(mid);
     }
 
+    /**
+     * Handles incoming HTTP requests by parsing the raw data into a Request object,
+     * executing middleware and route handlers, and sending back an HTTP response.
+     * If no route is found, responds with a 404 Not Found error.
+     * 
+     * @param key The SelectionKey representing the client connection
+     * @param context The RequestContext containing the incoming request data
+     */
     public void RequestHandler(SelectionKey key,RequestContext context){
       
         String res =context.getData();
@@ -135,10 +198,23 @@ public  class Server extends RequestFlow{
          
      
     }
+    
+    /**
+     * Enables test mode where the server closes after processing a single request.
+     * Useful for testing scenarios.
+     */
     public void isTesting(){
         log.libprint("Closing after single request", LogLevel.OK);
         this.should_close_after_one_request = true;
     }
+    
+    /**
+     * Interprets incoming request data from a client socket channel.
+     * Reads data into a ByteBuffer, appends it to RequestContext, and delegates
+     * to RequestHandler once a complete HTTP request is received (marked by \r\n\r\n).
+     * 
+     * @param key The SelectionKey for the client connection
+     */
     public void RequestInterpreter(SelectionKey key){
 
     SocketChannel client = (SocketChannel) key.channel();
@@ -167,6 +243,14 @@ public  class Server extends RequestFlow{
     }
     
     }
+    
+    /**
+     * Accepts a new client connection from the ServerSocketChannel.
+     * Configures the client SocketChannel for non-blocking I/O and registers it
+     * with the Selector for read operations.
+     * 
+     * @param select The SelectionKey for the accept operation
+     */
     public void Acceptence(SelectionKey select){
         
         try {
@@ -180,6 +264,11 @@ public  class Server extends RequestFlow{
              }
     }
     
+    /**
+     * Main event loop that continuously monitors registered channels for I/O readiness.
+     * Uses the Selector to wait for events (accept, read, write) and delegates
+     * processing to appropriate handlers. Runs until should_close_after_one_request is true.
+     */
     public void listen(){
       
         boolean loop=true;                                         

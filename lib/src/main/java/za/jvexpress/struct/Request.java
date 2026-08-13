@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-
+/**
+ * Represents an HTTP Request parsed from raw HTTP protocol data.
+ * Parses the HTTP request line and headers to extract method, path, host, cookies,
+ * authorization tokens, and query parameters from the URL.
+ */
 public class Request{
 private final  String rawHeader;
 protected  String data;
@@ -30,6 +34,23 @@ protected  String http_version;
 
 
 
+    /**
+     * Constructs a Request with parsed HTTP header information.
+     * 
+     * @param path The URL path extracted from the request line
+     * @param raw The raw HTTP request data
+     * @param host The Host header value
+     * @param method The HTTP method (GET, POST, etc.)
+     * @param cookie The Cookie header value
+     * @param uir The Upgrade-Insecure-Requests header value
+     * @param user_agent The User-Agent header value
+     * @param connection The Connection header value
+     * @param accept The Accept header value
+     * @param accept_lang The Accept-Language header value
+     * @param authorization The Authorization header value
+     * @param httpV The HTTP version (e.g., HTTP/1.1)
+     * @param queries Map of parsed query parameters from the URL
+     */
     public Request(
         String path,
         String raw,
@@ -62,6 +83,16 @@ protected  String http_version;
     }
 
 
+/**
+ * Parses raw HTTP request data into a Request object.
+ * Extracts the HTTP method, path, version from the request line.
+ * Parses headers into key-value pairs.
+ * Extracts and parses query parameters from the URL path.
+ * Supports single and multiple query parameters with key=value pairs and ampersand-separated values.
+ * 
+ * @param data The raw HTTP request string
+ * @return A new Request object with parsed information
+ */
 public static Request fromData(String data){
     String[] lines =data.split("\r\n");
     Map<String,String> collection =new TreeMap<>();
@@ -137,18 +168,54 @@ public static Request fromData(String data){
     );
    
 }
+ /**
+  * Gets the URL path of this request.
+  * @return The request path
+  */
  public String getPath(){return this.path; }
+ 
+ /**
+  * Gets the parsed query parameters from the URL.
+  * @return Map of query parameters with nested key-value pairs
+  */
 public Map<String,Map<String,?>> getQueries(){
     return this.queries;
 }
+ 
+ /**
+  * Gets the HTTP method of this request.
+  * @return The HTTP method (GET, POST, etc.)
+  */
  public String getMethod(){return this.method; }
+ 
+ /**
+  * Gets the Authorization header value.
+  * @return The authorization token or header
+  */
 public String getAuthorization(){return this.authorization;};
+ 
+ /**
+  * Gets the Connection header value.
+  * @return The connection type (e.g., keep-alive)
+  */
  public String getConnection(){return this.connection; }
  
+ /**
+  * Gets the User-Agent header value.
+  * @return The user agent string
+  */
  public String getUserAgent(){return this.user_agent; }
  
+ /**
+  * Gets the Cookie header value.
+  * @return The cookie string
+  */
  public String getCookie(){return this.cookie; }
 
+ /**
+  * Gets the raw HTTP request data.
+  * @return The complete raw HTTP request
+  */
   public String getRawHeader(){return this.rawHeader; }
 
 }

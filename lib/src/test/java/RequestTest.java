@@ -4,11 +4,17 @@ import org.junit.jupiter.api.Test;
 
 import za.jvexpress.struct.Request;
 
-
-
+/**
+ * Unit tests for Request parsing and HTTP header extraction.
+ * Tests URL query parameter parsing (single and multiple parameters).
+ * Validates HTTP header extraction (Host, User-Agent, Cookie, Authorization).
+ */
 class RequestTest{
 
-
+    /**
+     * Tests parsing a single URL query parameter from GET request.
+     * Verifies that query parameters are correctly extracted and parsed.
+     */
     @Test
     void testingUrlQueryParameter(){
         String rawResponse = "GET /user?name=john \n" + //
@@ -30,7 +36,11 @@ class RequestTest{
     assertEquals(expectedString,queries);
     }
 
-      @Test
+    /**
+     * Tests parsing multiple URL query parameters (key-value pairs separated by &).
+     * Verifies that all parameters are correctly extracted and parsed together.
+     */
+    @Test
     void testingUrlMultiQueryParameter(){
         String rawResponse = "GET /user?name=john&age=50 \n" + //
                         "Host: localhost:8089\n" + //
@@ -50,7 +60,12 @@ class RequestTest{
     String expectedString="{user={name=john, age=50}}";
     assertEquals(expectedString,queries);
     }
-      @Test
+    
+    /**
+     * Tests parsing URL query parameters where some parameters have no value.
+     * Verifies that parameters without values are parsed with null as their value.
+     */
+    @Test
     void testingUrlQueryParameterWithNullable(){
         String rawResponse = "GET /user?name=john&age \n" + //
                         "Host: localhost:8089\n" + //
@@ -72,7 +87,12 @@ class RequestTest{
     }
 
 
-      @Test
+    /**
+     * Tests parsing of HTTP request headers including HTTP/2 format.
+     * Verifies extraction of Authorization, User-Agent, Connection, and Cookie headers.
+     * Tests header value trimming and proper parsing of complex header values.
+     */
+    @Test
     void testingUrlParser(){
         String rawResponse = "GET /my/progress HTTP/2\r\n" + //
                         "Host: test.com\r\n" + //
