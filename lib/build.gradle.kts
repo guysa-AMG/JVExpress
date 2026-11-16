@@ -11,6 +11,10 @@ plugins {
 
 group = "io.github.guysa-AMG"
 version = "0.0.1"
+dependencies{
+    // Source: https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+testImplementation("org.junit.jupiter:junit-jupiter-api:6.1.3")
+}
 
 java {
     withSourcesJar()
